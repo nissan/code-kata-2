@@ -1,6 +1,14 @@
 version: '3.8'
 
 services:
+  backend:
+    build:
+      context: ./backend
+    ports:
+      - "8082:80"
+    environment:
+      - UVICORN_WORKERS-2
+    command: uvicorn main:app --host 0.0.0.0 --port 80
   accounting-software:
     build:
       context: ./external/accounting-software

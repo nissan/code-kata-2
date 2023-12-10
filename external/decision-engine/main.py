@@ -12,4 +12,4 @@ app = FastAPI()
 
 @app.post("/")
 async def root(application:DEForm):
-    return {"message": "Loan Processed and Approved"}
+    return {"outcome": "approved"}

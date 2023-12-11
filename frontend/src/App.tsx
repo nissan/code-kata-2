@@ -5,29 +5,31 @@ import './App.css'
 
 function App() {
   const [count, setCount] = useState(0)
+  const [provider, setProvider] = useState("xero")
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <h1>Loan Application Form</h1>
+      <form>
+        <h2>Business Details</h2>
+        <label>Business Name</label>
+        <input type="text" name="businessName" />
+        <br />
+        <label>Year Established</label>
+        <input type="text" name="yearEstablished" />
+        <br />
+        <label>Requested Loan Amount</label>
+        <input type="text" name="loanAmount" />
+        <br />
+        <label>Accounting Software</label>
+        <select name="provider">
+          <option value="xero">Xero</option>
+          <option value="myob">MYOB</option>
+        </select>
+        <button onClick={fetchBalances}>Fetch Balances</button>
+        <br />
+        <button>Request Loan Decision</button>
+      </form>
     </>
   )
 }

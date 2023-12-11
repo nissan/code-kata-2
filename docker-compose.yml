@@ -17,7 +17,6 @@ services:
     environment:
       - UVICORN_WORKERS=2  # Optional, to set the number of Uvicorn workers
     command: uvicorn main:app --host 0.0.0.0 --port 80  # Assuming 'main.py' and FastAPI app instance named 'app'
-
   decision-engine:
     build:
       context: ./external/decision-engine

@@ -1,6 +1,6 @@
 from typing import Annotated, List
 from fastapi import FastAPI
-from pydantic import UUID4, BaseModel
+from pydantic import UUID4, BaseModel, HttpUrl
 import uuid
 import os
 import httpx
@@ -27,13 +27,30 @@ class LoanApplicationForm(BaseModel):
     preAssessment: int
     balances: List[AccountingDataRow]
 
-async def request(provider_url):
+class BusinessDetails(BaseModel):
+    name: str
+    yearEstablished: int
+    summaryProfitOrLoss: float
+class DEForm(BaseModel):
+    businessDetails: BusinessDetails
+    preAssessment: int
+
+async def request_balances_external(provider_url:HttpUrl):
     try:
         async with httpx.AsyncClient() as client:
             response = await client.get(provider_url)
             return response.json()
     except:
         return f"Unable to connect to external accounting software"
+
+async def request_application_decision_external(provider_url:HttpUrl, decision_engine_data:DEForm):
+    try:
+        async with httpx.AsyncClient() as client:
+            response = await client.post(provider_url, json=decision_engine_data)
+            return response.json()
+    except:
+        return f"Unable to connect to external accounting software"
+
 
 def calculate_total_revenue(balances:List[AccountingDataRow]):
     total_revenue=0
@@ -68,17 +85,26 @@ async def request_outcome(application:LoanApplicationForm):
     revenue = calculate_total_revenue(application.balances)
     avg_assets = calculate_avg_assets(application.balances)
     preAssessment = calculate_preAssessment(application.loanAmountRequested, revenue, avg_assets)
-    return {"outcome": "approved", "revenue":revenue, "avg_assets": avg_assets, "preAssessment": preAssessment}
+    decision_engine_url = "http://localhost:8080/" if os.getenv("DECISION_ENGINE_URL") is None else os.getenv("DECISION_ENGINE_URL")
+    response = await request_application_decision_external(decision_engine_url, 
+        {"businessDetails":{
+            "name":application.name,
+            "yearEstablished": application.yearEstablished,
+            "summaryProfitOrLoss": revenue
+            },
+        "preAssessment": preAssessment
+        })
+    return {"outcome": response, "revenue":revenue, "avg_assets": avg_assets, "preAssessment": preAssessment}
 
 @app.post("/balances") 
-async def request_balances(provider:AccountingSoftwareProvider) -> List[AccountingDataRow]:
+async def request_balance_sheet(provider:AccountingSoftwareProvider) -> List[AccountingDataRow]:
     try: 
         if provider.provider_name=='xero':
             provider_url = "http://localhost:8081/xero/balances" if os.getenv("XERO_URL") is None else os.getenv("XERO_URL")
-            return await request(provider_url)
+            return await request_balances_external(provider_url)
         elif provider.provider_name=='myob':
             provider_url = "http://localhost:8081/myob/balances" if os.getenv("MYOB_URL") is None else os.getenv("MYOB_URL")
-            return await request(provider_url)
+            return await request_balances(provider_url)
         else:
             return [
                     {

@@ -1,14 +1,24 @@
 import { useState } from 'react'
 import LoanApplicationForm from './components/LoanApplicationForm';
+import { Button } from './components/ui/button';
 
 function App() {
   const [newAppStarted, setNewAppStarted] = useState(false);
-  
+
   return (
     <>
-      <h1>Loan Application Form</h1>
-      <button onClick={()=>setNewAppStarted(true)}>Start New Application</button>
-      {newAppStarted && <LoanApplicationForm />}
+      <div className='grid grid-cols-3 gap-4'>
+        <div>{""}</div>
+        <div>
+        <h1 className="bold">Loan Application System</h1>
+        <hr/>
+        {!newAppStarted &&
+          <Button onClick={() => setNewAppStarted(true)}>Start New Application</Button>
+        }
+        {newAppStarted && <LoanApplicationForm />}
+      </div>
+      <div>{""}</div>
+      </div>
     </>
   )
 }

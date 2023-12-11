@@ -1,11 +1,25 @@
+import { Button } from "./ui/button";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
+
 function SelectAccountingSoftware() {
+    async function fetchBalance(e:any){
+        e.preventDefault();
+        console.log("Fetching account balances for:")
+    }
     return (
         <>
-            <select name="provider">
-                <option value="xero">Xero</option>
-                <option value="myob">MYOB</option>
-            </select>
-            <button>Fetch Balances</button>
+            <div>
+            <Select name="provider">
+                <SelectTrigger className="w-[180px]">
+                    <SelectValue placeholder="Accounting Software" />
+                </SelectTrigger>
+                <SelectContent>
+                    <SelectItem value="xero">Xero</SelectItem>
+                    <SelectItem value="myob">MYOB</SelectItem>
+                </SelectContent>
+            </Select>
+            <Button onClick={fetchBalance}>Fetch Balances</Button>
+            </div>
         </>
     )
 }

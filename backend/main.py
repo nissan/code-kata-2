@@ -19,11 +19,13 @@ class AccountingDataRow(BaseModel):
     profitOrLoss: float
     assetsValue: float
 
-class DEForm(BaseModel):
-    name: UUID4
+class LoanApplicationForm(BaseModel):
+    id: UUID4
+    name: str
     yearEstablished: int
-    summaryProfitOrLoss: float
+    loanAmountRequested:float
     preAssessment: int
+    balances: List[AccountingDataRow]
 
 async def request(provider_url):
     try:
@@ -33,6 +35,19 @@ async def request(provider_url):
     except:
         return f"Unable to connect to external accounting software"
 
+def calculate_total_revenue(balances:List[AccountingDataRow]):
+    total_revenue=0
+    for row in balances:
+        total_revenue+=row.profitOrLoss
+    return total_revenue 
+
+def calculate_avg_assets(balances:List[AccountingDataRow]):
+    total_months = len(balances)
+    total_assets = 0
+    for row in balances:
+        total_assets+=row.assetsValue
+    return total_assets/total_months
+
 app = FastAPI()
 
 @app.post("/initialise", response_model=InitialisedApplication)
@@ -40,8 +55,10 @@ async def initialise_application():
     return {"application_id": uuid.uuid4()}
 
 @app.post("/outcome")
-async def request_outcome(application:DEForm):
-    return {"outcome": "approved"}
+async def request_outcome(application:LoanApplicationForm):
+    revenue = calculate_total_revenue(application.balances)
+    avg_assets = calculate_avg_assets(application.balances)
+    return {"outcome": "approved", "revenue":revenue, "avg_assets": avg_assets}
 
 @app.post("/balances") 
 async def request_balances(provider:AccountingSoftwareProvider) -> List[AccountingDataRow]:

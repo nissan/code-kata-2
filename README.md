@@ -1,3 +1,19 @@
+# Running Instructions
+
+Postman collection to use for testing endpoints is included
+`COdeKata-Loan-Application-API-Endpoint-Tests.postman_collection.json`
+
+Running with `docker-compose up` will standup the environment, but some Postman tests won't complete due to cross-container communication blocks that still need to be troubleshooted.
+
+To run successfully, execute the following to initialise each component:
+
+- For backend
+  `uvicorn main:app --port 8082 --reload`
+- For emulating external accounting software endpoints
+  `uvicorn main:app --port 8081 --reload`
+- For emulating decision engine software endpoints
+  `uvicorn main:app --port 8080 --reload`
+
 # Exercise
 
 The goal of the project is to build a simple business loan application system.

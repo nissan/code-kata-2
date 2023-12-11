@@ -8,37 +8,7 @@
 	},
 	"item": [
 		{
-			"name": "Post application to Decision Engine",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"businessDetails\":{\n        \"name\":\"Red Company Ltd\",\n        \"yearEstablished\": 2023,\n        \"summaryProfitOrLoss\": 100000\n    },\n   \"preAssessment\": 60\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "localhost:8080",
-					"host": [
-						"localhost"
-					],
-					"port": "8080"
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Request balance from Xero",
+			"name": "Initalise a new application",
 			"request": {
 				"method": "GET",
 				"header": []
@@ -46,7 +16,15 @@
 			"response": []
 		},
 		{
-			"name": "Initalise a new application",
+			"name": "Request balances from backend",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Request balance from Xero",
 			"request": {
 				"method": "GET",
 				"header": []
@@ -82,10 +60,32 @@
 			"response": []
 		},
 		{
-			"name": "Request balances from backend",
+			"name": "Post application to Decision Engine",
 			"request": {
-				"method": "GET",
-				"header": []
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"businessDetails\":{\n        \"name\":\"Red Company Ltd\",\n        \"yearEstablished\": 2023,\n        \"summaryProfitOrLoss\": 100000\n    },\n   \"preAssessment\": 60\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080",
+					"host": [
+						"localhost"
+					],
+					"port": "8080"
+				}
 			},
 			"response": []
 		}

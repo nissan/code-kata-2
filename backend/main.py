@@ -49,7 +49,7 @@ async def request_application_decision_external(provider_url:HttpUrl, decision_e
             response = await client.post(provider_url, json=decision_engine_data)
             return response.json()
     except:
-        return f"Unable to connect to external accounting software"
+        return f"Unable to connect to external decision engine software"
 
 
 def calculate_total_revenue(balances:List[AccountingDataRow]):

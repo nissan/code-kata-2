@@ -2,10 +2,12 @@ from typing import Optional
 from fastapi import FastAPI
 from pydantic import BaseModel
 
-class DEForm(BaseModel):
+class BusinessDetails(BaseModel):
     name: str
     yearEstablished: int
     summaryProfitOrLoss: float
+class DEForm(BaseModel):
+    businessDetails: BusinessDetails
     preAssessment: int
 
 app = FastAPI()

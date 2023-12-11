@@ -48,6 +48,15 @@ def calculate_avg_assets(balances:List[AccountingDataRow]):
         total_assets+=row.assetsValue
     return total_assets/total_months
 
+def calculate_preAssessment(loanAmountRequested:float, total_revenue:float, avg_assets: float):
+    preAssessment = 20
+    if total_revenue > 0:
+        preAssessment = 60
+    if avg_assets > loanAmountRequested:
+        preAssessment = 100
+    return preAssessment
+
+
 app = FastAPI()
 
 @app.post("/initialise", response_model=InitialisedApplication)
@@ -58,16 +67,17 @@ async def initialise_application():
 async def request_outcome(application:LoanApplicationForm):
     revenue = calculate_total_revenue(application.balances)
     avg_assets = calculate_avg_assets(application.balances)
-    return {"outcome": "approved", "revenue":revenue, "avg_assets": avg_assets}
+    preAssessment = calculate_preAssessment(application.loanAmountRequested, revenue, avg_assets)
+    return {"outcome": "approved", "revenue":revenue, "avg_assets": avg_assets, "preAssessment": preAssessment}
 
 @app.post("/balances") 
 async def request_balances(provider:AccountingSoftwareProvider) -> List[AccountingDataRow]:
     try: 
         if provider.provider_name=='xero':
-            provider_url = os.getenv("XERO_URL") or "http://localhost:8081/xero/balances"
+            provider_url = "http://localhost:8081/xero/balances" if os.getenv("XERO_URL") is None else os.getenv("XERO_URL")
             return await request(provider_url)
         elif provider.provider_name=='myob':
-            provider_url = os.getenv("XERO_URL") or "http://localhost:8081/myob/balances"
+            provider_url = "http://localhost:8081/myob/balances" if os.getenv("MYOB_URL") is None else os.getenv("MYOB_URL")
             return await request(provider_url)
         else:
             return [

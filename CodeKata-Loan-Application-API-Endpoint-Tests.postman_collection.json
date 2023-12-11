@@ -1,0 +1,93 @@
+{
+	"info": {
+		"_postman_id": "4d2f5ea8-c26d-4985-a171-b184b79130ee",
+		"name": "CodeKata Loan Application API Endpoint Tests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "258558",
+		"_collection_link": "https://orange-meteor-605793.postman.co/workspace/Stori-Localhost~6d1372e2-95ae-48b1-8170-1c74028285d9/collection/258558-4d2f5ea8-c26d-4985-a171-b184b79130ee?action=share&source=collection_link&creator=258558"
+	},
+	"item": [
+		{
+			"name": "Post application to Decision Engine",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"businessDetails\":{\n        \"name\":\"Red Company Ltd\",\n        \"yearEstablished\": 2023,\n        \"summaryProfitOrLoss\": 100000\n    },\n   \"preAssessment\": 60\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080",
+					"host": [
+						"localhost"
+					],
+					"port": "8080"
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Request balance from Xero",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Initalise a new application",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Submit an application to DE for an outcome",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": \"b50f0c48-2b8e-4ad7-9202-a783ae6b328c\",\n    \"name\":\"Acme Inc\",\n    \"yearEstablished\": 2021,\n    \"preAssessment\":20,\n    \"balances\":[\n    {\n        \"year\": 2020,\n        \"month\": 12,\n        \"profitOrLoss\": 250000.0,\n        \"assetsValue\": 1234.0\n    },\n    {\n        \"year\": 2020,\n        \"month\": 11,\n        \"profitOrLoss\": 1150.0,\n        \"assetsValue\": 5789.0\n    },\n    {\n        \"year\": 2020,\n        \"month\": 10,\n        \"profitOrLoss\": 2500.0,\n        \"assetsValue\": 22345.0\n    },\n    {\n        \"year\": 2020,\n        \"month\": 9,\n        \"profitOrLoss\": -187000.0,\n        \"assetsValue\": 223452.0\n    }\n]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8082/outcome",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"outcome"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Request balances from backend",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		}
+	]
+}

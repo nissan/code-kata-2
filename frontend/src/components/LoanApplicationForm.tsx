@@ -1,3 +1,5 @@
+import SelectAccountingSoftware from "./SelectAccountingSoftware";
+
 function LoanApplicationForm() {
     async function handleSubmit(e:React.SyntheticEvent){
         e.preventDefault();
@@ -18,11 +20,7 @@ function LoanApplicationForm() {
             <input type="text" name="loanAmount" />
             <br />
             <label>Accounting Software</label>
-            <select name="provider">
-                <option value="xero">Xero</option>
-                <option value="myob">MYOB</option>
-            </select>
-            <button>Fetch Balances</button>
+            <SelectAccountingSoftware />
             <br />
             <button type="submit">Request Loan Decision</button>
         </form>

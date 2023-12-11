@@ -5,13 +5,15 @@ Postman collection to use for testing endpoints is included
 
 Running with `docker-compose up` will standup the environment, but some Postman tests won't complete due to cross-container communication blocks that still need to be troubleshooted.
 
-To run successfully, execute the following to initialise each component:
-
-- For backend
+To run successfully, execute the following to initialise each component for debugging/testing:
+- For frontend. From `frontend` folder run
+  `pnpm i && pnpm dev`
+  Open web browser to http://localhost:8083
+- For backend. From `backend` folder run
   `uvicorn main:app --port 8082 --reload`
-- For emulating external accounting software endpoints
+- For emulating external accounting software endpoints. From `external\account-software` folder run
   `uvicorn main:app --port 8081 --reload`
-- For emulating decision engine software endpoints
+- For emulating decision engine software endpoints. From `external\decision-engine` folder run
   `uvicorn main:app --port 8080 --reload`
 
 # Exercise

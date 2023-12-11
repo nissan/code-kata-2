@@ -104,7 +104,7 @@ async def request_balance_sheet(provider:AccountingSoftwareProvider) -> List[Acc
             return await request_balances_external(provider_url)
         elif provider.provider_name=='myob':
             provider_url = "http://localhost:8081/myob/balances" if os.getenv("MYOB_URL") is None else os.getenv("MYOB_URL")
-            return await request_balances(provider_url)
+            return await request_balances_external(provider_url)
         else:
             return [
                     {

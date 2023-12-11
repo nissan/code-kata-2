@@ -5,6 +5,7 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile
+      network: host
     ports:
       - 8083:3000
     volumes:
@@ -15,14 +16,22 @@ services:
   backend:
     build:
       context: ./backend
+      network: host
     ports:
       - "8082:80"
     environment:
       - UVICORN_WORKERS-2
+      - DECISION_ENGINE_URL=http://decision-engine:80
+      - MYOB_URL=http://accounting-software:80/xero/balances
+      - XERO_URL=http://accounting-software:80/myob/balances
     command: uvicorn main:app --host 0.0.0.0 --port 80
+    links:
+      - "accounting-software"
+      - "decision-engine"
   accounting-software:
     build:
       context: ./external/accounting-software
+      network: host
     ports:
       - "8081:80"
     environment:
@@ -31,6 +40,7 @@ services:
   decision-engine:
     build:
       context: ./external/decision-engine
+      network: host
     ports:
       - "8080:80"
     environment:

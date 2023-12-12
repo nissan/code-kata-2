@@ -21,7 +21,7 @@ function LoanApplicationForm() {
         };
 
         try {
-            const response = await fetch("http://localhost:8082/initialise", requestOptions);
+            const response = await fetch(`${import.meta.env.VITE_BACKEND_URL||"http://localhost:8082"}/initialise`, requestOptions);
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }

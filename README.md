@@ -1,20 +1,56 @@
 # Running Instructions
 
 Postman collection to use for testing endpoints is included
-`COdeKata-Loan-Application-API-Endpoint-Tests.postman_collection.json`
+`CodeKata-Loan-Application-API-Endpoint-Tests.postman_collection.json`
 
-Running with `docker-compose up` will standup the environment, but some Postman tests won't complete due to cross-container communication blocks that still need to be troubleshooted.
+Running with `docker-compose up` will standup the environment, but Postman tests should complete as expected. Cross-container communication was enabled to allow this.
 
-To run successfully, execute the following to initialise each component for debugging/testing:
-- For frontend. From `frontend` folder run
-  `pnpm i && pnpm dev`
-  Open web browser to http://localhost:8083
-- For backend. From `backend` folder run
-  `uvicorn main:app --port 8082 --reload`
-- For emulating external accounting software endpoints. From `external\account-software` folder run
-  `uvicorn main:app --port 8081 --reload`
-- For emulating decision engine software endpoints. From `external\decision-engine` folder run
-  `uvicorn main:app --port 8080 --reload`
+To run successfully without Docker-Compose, execute the following to initialise each component for debugging/testing:
+- For frontend. 
+  - *With Docker*: From `frontend` folder run
+  
+    `docker build -t frontend .` 
+    
+    then run
+
+    `docker run -p 8083:3000 frontend`
+  - *Without Docker*: From `frontend` folder run
+  
+    `pnpm i && pnpm dev`
+  - Open web browser to http://localhost:8083
+- For backend.
+  - *With Docker* From `backend` folder run 
+  
+    `docker build -t backend .` 
+    
+    then run
+
+    `docker run -p 8082:80 backend`
+  - *Without Docker* From `backend` folder run
+  
+    `uvicorn main:app --port 8082 --reload`
+- For emulating external accounting software endpoints.
+  - *With Docker* From `external\account-software` folder run 
+  
+    `docker build -t account-software .` 
+    
+    then run
+
+    `docker run -p 8081:80 account-software` 
+  - *Without Docker* From `external\account-software` folder run
+  
+    `uvicorn main:app --port 8081 --reload`
+- For emulating decision engine software endpoints. 
+  - *With Docker* From `external\decision-engine` folder run 
+  
+    `docker build -t decision-engine .` 
+    
+    then run
+
+    `docker run -p 8081:80 decision-engine`
+  - *Without Docker* From `external\decision-engine` folder run
+  
+    `uvicorn main:app --port 8080 --reload`
 
 # Exercise
 

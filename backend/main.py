@@ -1,5 +1,6 @@
 from typing import Annotated, List
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import UUID4, BaseModel, HttpUrl
 import uuid
 import os
@@ -75,6 +76,10 @@ def calculate_preAssessment(loanAmountRequested:float, total_revenue:float, avg_
 
 
 app = FastAPI()
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins="*" #TODO: Could probably do better here with setting specific IPs allowed
+)
 
 @app.post("/initialise", response_model=InitialisedApplication)
 async def initialise_application():

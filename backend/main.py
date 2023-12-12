@@ -78,7 +78,9 @@ def calculate_preAssessment(loanAmountRequested:float, total_revenue:float, avg_
 app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
-    allow_origins="*" #TODO: Could probably do better here with setting specific IPs allowed
+    allow_origins="*", #TODO: Could probably do better here with setting specific IPs allowed
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 @app.post("/initialise", response_model=InitialisedApplication)

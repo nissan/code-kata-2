@@ -1,4 +1,5 @@
-# Running Instructions
+# Candidate: Nissan Dookeran <nissan.dookeran+nospam@gmail.com>
+## Running Instructions
 
 Postman collection to use for testing endpoints is included
 `CodeKata-Loan-Application-API-Endpoint-Tests.postman_collection.json`
@@ -52,7 +53,13 @@ To run successfully without Docker-Compose, execute the following to initialise 
   
     `uvicorn main:app --port 8080 --reload`
 
-# Exercise
+## Future TODOs:
+- Improve data validation on form (e.g. range of allowed years, positive value loan requests etc)
+- Debug the `docker-compose.yml` to understand why the frontend doesn't render properly here but will when run using just the `Dockerfile`
+- Automate the E2E testing by adding PlayWright to the frontend
+- Automate the backend testing using unit tests
+
+## Exercise
 
 The goal of the project is to build a simple business loan application system.
 

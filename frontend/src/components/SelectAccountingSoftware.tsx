@@ -6,7 +6,7 @@ import BalancesTable from "./BalancesTable";
 function SelectAccountingSoftware() {
     const [selectedAccountingSoftware, setSelectedAccountingSoftware] = useState("");
     const [balancesFetched, setBalancesFetched] = useState(false);
-    const [balances, setBalances]=useState([]);
+    const [balances, setBalances] = useState([]);
     async function fetchBalance(e: any) {
         e.preventDefault();
         const myHeaders = new Headers();
@@ -37,7 +37,7 @@ function SelectAccountingSoftware() {
             console.log('error', error);
             return undefined;  // Return undefined or some default value in case of an error
         }
-        
+
         setBalancesFetched(true);
 
     }
@@ -59,7 +59,7 @@ function SelectAccountingSoftware() {
                 <Button onClick={fetchBalance}>Fetch Balances</Button>
                 {balancesFetched && selectedAccountingSoftware &&
                     <div id="balancesData">
-                        Balances for {selectedAccountingSoftware} are 
+                        Balances for {selectedAccountingSoftware} are
                         <BalancesTable data={balances} />
                     </div>
                 }

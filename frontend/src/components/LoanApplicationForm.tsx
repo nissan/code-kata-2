@@ -21,13 +21,13 @@ function LoanApplicationForm() {
         };
 
         try {
-            const response = await fetch(`${import.meta.env.VITE_BACKEND_URL||"http://localhost:8082"}/initialise`, requestOptions);
+            const response = await fetch(`${import.meta.env.VITE_BACKEND_URL || "http://localhost:8082"}/initialise`, requestOptions);
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
 
             const json = await response.json();
-            return json.application_id;  
+            return json.application_id;
         } catch (error) {
             console.log('error', error);
             return undefined;  // Return undefined or some default value in case of an error
@@ -63,6 +63,7 @@ function LoanApplicationForm() {
                     <SelectAccountingSoftware />
                     <br />
                     <Button type="submit">Request Loan Decision</Button>
+
                 </form>
             </CardContent>
         </Card>

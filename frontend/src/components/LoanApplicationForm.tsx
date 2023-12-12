@@ -7,10 +7,22 @@ import { Separator } from "./ui/separator";
 import { Input } from "./ui/input";
 
 function LoanApplicationForm() {
-    const [appId, setAppId] = useState("");
+    const [formData, setFormData] = useState({
+        id: "",
+        name: '',
+        yearEstablished:2023,
+        loanAmount:0.00,
+        balances:[],
+        preAssessment:20
+
+    })
     useEffect(() => {
-        getAppId().then(appId => {
-            setAppId(appId);
+        getAppId().then(id => {
+            console.log("Id: " + id);
+            setFormData(prevState => ({
+                ...prevState,
+                id: id
+            }))
         });
     }, []);
     async function getAppId() {
@@ -36,7 +48,21 @@ function LoanApplicationForm() {
     async function handleSubmit(e: React.SyntheticEvent) {
         e.preventDefault();
         console.log("Form submitted");
+        console.log(formData);
         return;
+    }
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setFormData(prevState => ({
+            ...prevState,
+            [name]: value
+        }));
+    };
+    const handleBalancesRetrieved = (balances:[]) => {
+        setFormData(prevState => ({
+            ...prevState,
+            balances
+        }))
     }
     return (
         <Card className="w-[550px]">
@@ -46,21 +72,21 @@ function LoanApplicationForm() {
             </CardHeader>
             <CardContent>
                 <form onSubmit={handleSubmit}>
-                    <Label>Application Id: {appId}</Label>
+                    <Label>Application Id: {formData.id}</Label>
                     <Separator />
                     <h3 className="bold">Business Details</h3>
                     <Separator />
-                    <Label htmlFor="businessName">Business Name</Label>
-                    <Input type="text" name="businessName" />
+                    <Label htmlFor="name">Business Name</Label>
+                    <Input type="text" name="name" onChange={handleInputChange} value={formData.name} />
                     <Separator />
                     <Label htmlFor="yearEstablished">Year Established</Label>
-                    <Input type="text" name="yearEstablished" />
+                    <Input type="text" name="yearEstablished" onChange={handleInputChange} value={formData.yearEstablished} />
                     <Separator />
                     <Label htmlFor="loanAmount">Requested Loan Amount</Label>
-                    <Input type="text" name="loanAmount" />
+                    <Input type="text" name="loanAmount" onChange={handleInputChange} value={formData.loanAmount} />
                     <Separator />
                     <Label htmlFor="selectAcc">Accounting Software</Label>
-                    <SelectAccountingSoftware />
+                    <SelectAccountingSoftware onBalancesRetrieved={handleBalancesRetrieved}/>
                     <br />
                     <Button type="submit">Request Loan Decision</Button>
 

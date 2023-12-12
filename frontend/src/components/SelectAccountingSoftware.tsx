@@ -3,7 +3,7 @@ import { Button } from "./ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
 import BalancesTable from "./BalancesTable";
 
-function SelectAccountingSoftware() {
+function SelectAccountingSoftware({ onBalancesRetrieved }) {
     const [selectedAccountingSoftware, setSelectedAccountingSoftware] = useState("");
     const [balancesFetched, setBalancesFetched] = useState(false);
     const [balances, setBalances] = useState([]);
@@ -33,6 +33,7 @@ function SelectAccountingSoftware() {
             const json = await response.json();
             // console.log(`Fetching account balances for:${selectedAccountingSoftware} as ${JSON.stringify(json)}`)
             setBalances(json);
+            onBalancesRetrieved(json);
         } catch (error) {
             console.log('error', error);
             return undefined;  // Return undefined or some default value in case of an error

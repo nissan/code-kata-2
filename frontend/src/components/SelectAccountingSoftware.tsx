@@ -3,7 +3,11 @@ import { Button } from "./ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
 import BalancesTable from "./BalancesTable";
 
-function SelectAccountingSoftware({ onBalancesRetrieved }) {
+
+type SelectAccountingSoftwareProps = {
+    onBalancesRetrieved: (balances:[]) => void;
+};
+function SelectAccountingSoftware({ onBalancesRetrieved} : SelectAccountingSoftwareProps){
     const [selectedAccountingSoftware, setSelectedAccountingSoftware] = useState("");
     const [balancesFetched, setBalancesFetched] = useState(false);
     const [balances, setBalances] = useState([]);
@@ -60,7 +64,6 @@ function SelectAccountingSoftware({ onBalancesRetrieved }) {
                 <Button onClick={fetchBalance}>Fetch Balances</Button>
                 {balancesFetched && selectedAccountingSoftware &&
                     <div id="balancesData">
-                        Balances for {selectedAccountingSoftware} are
                         <BalancesTable data={balances} />
                     </div>
                 }

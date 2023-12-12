@@ -14,7 +14,7 @@ function LoanApplicationForm() {
         });
     }, []);
     async function getAppId() {
-        var requestOptions: RequestInit = {
+        const requestOptions: RequestInit = {
             method: 'POST',
             redirect: 'follow',
             mode: 'cors'
@@ -27,7 +27,7 @@ function LoanApplicationForm() {
             }
 
             const json = await response.json();
-            return json.application_id;  // Assuming the field is named 'application_id'
+            return json.application_id;  
         } catch (error) {
             console.log('error', error);
             return undefined;  // Return undefined or some default value in case of an error

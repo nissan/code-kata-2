@@ -31,7 +31,7 @@ function SelectAccountingSoftware() {
             }
 
             const json = await response.json();
-            console.log(`Fetching account balances for:${selectedAccountingSoftware} as ${JSON.stringify(json)}`)
+            // console.log(`Fetching account balances for:${selectedAccountingSoftware} as ${JSON.stringify(json)}`)
             setBalances(json);
         } catch (error) {
             console.log('error', error);

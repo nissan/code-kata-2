@@ -3,7 +3,7 @@
 Postman collection to use for testing endpoints is included
 `CodeKata-Loan-Application-API-Endpoint-Tests.postman_collection.json`
 
-Running with `docker-compose up` will standup the environment, but Postman tests should complete as expected. Cross-container communication was enabled to allow this.
+Running with `docker-compose up` will standup the environment, with Postman tests completing as expected. Cross-container communication was enabled to allow this. TODO: Outstanding bug where the `frontend` website may not  render correctly in `docker-compose up` although it does work correctly when stood up with `docker run` directly.
 
 To run successfully without Docker-Compose, execute the following to initialise each component for debugging/testing:
 - For frontend. 

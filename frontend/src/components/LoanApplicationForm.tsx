@@ -9,10 +9,29 @@ import { Input } from "./ui/input";
 function LoanApplicationForm() {
     const [appId, setAppId] = useState("");
     useEffect(() => {
-        setAppId(getAppId());
+        getAppId().then(appId => {
+            setAppId(appId);
+        });
     }, []);
-    function getAppId() {
-        return "12345"
+    async function getAppId() {
+        var requestOptions: RequestInit = {
+            method: 'POST',
+            redirect: 'follow',
+            mode: 'cors'
+        };
+
+        try {
+            const response = await fetch("http://localhost:8082/initialise", requestOptions);
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const json = await response.json();
+            return json.application_id;  // Assuming the field is named 'application_id'
+        } catch (error) {
+            console.log('error', error);
+            return undefined;  // Return undefined or some default value in case of an error
+        }
     }
     async function handleSubmit(e: React.SyntheticEvent) {
         e.preventDefault();
